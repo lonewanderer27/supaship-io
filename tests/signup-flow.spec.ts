@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { login, setupE2eTest, signUp } from "./util";
+import { login, setupE2eTest, signUp } from "./utils";
 
 test.describe("User auth", () => {
   const userEmail = "test@test.io";
