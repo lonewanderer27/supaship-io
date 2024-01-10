@@ -69,6 +69,7 @@ export function useSession(): SupashipUserInfo {
     if (data) {
       setUserInfo({ ...userInfo, profile: data });
     } else {
+      setReturnPath();
       navigate("/welcome");
     }
 

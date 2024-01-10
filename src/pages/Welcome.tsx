@@ -14,6 +14,7 @@ export async function welcomeLoader() {
   if (!user) {
     return redirect("/");
   }
+
   const { data } = await supaClient
     .from("user_profiles")
     .select("*")
@@ -23,6 +24,8 @@ export async function welcomeLoader() {
   if (data?.username) {
     return redirect("/");
   }
+
+  return null;
 }
 
 const schema = yup.object({

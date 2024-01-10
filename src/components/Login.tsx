@@ -4,6 +4,7 @@ import { Auth } from '@supabase/auth-ui-react';
 import Dialog from './Dialog';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { UserContext } from './Layout';
+import { setReturnPath } from '@/hooks/use-session';
 import { supaClient } from '@/supa-client';
 
 export enum AuthMode {
@@ -42,6 +43,7 @@ export default function Login() {
           onClick={() => {
             setAuthMode(AuthMode.SignUp);
             setShowModal(true);
+            setReturnPath();
           }}
         >
           sign up
