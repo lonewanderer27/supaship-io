@@ -2,12 +2,12 @@ import './output.css'
 import './App.css'
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import Welcome, { welcomeLoader } from './pages/Welcome'
 
 import AllPosts from './pages/AllPosts'
 import Layout from './components/Layout'
 import MessageBoard from './components/MessageBoard'
 import PostView from './components/PostView'
-import Welcome from './pages/Welcome'
 
 const router = createBrowserRouter([
   {
@@ -30,7 +30,8 @@ const router = createBrowserRouter([
       },
       {
         path: 'welcome',
-        element: <Welcome />
+        element: <Welcome />,
+        loader: welcomeLoader
       }
     ]
   }

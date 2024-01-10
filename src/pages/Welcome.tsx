@@ -1,13 +1,29 @@
 import * as yup from 'yup';
 
 import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
+import { redirect, useNavigate } from 'react-router-dom';
 
 import Dialog from '@/components/Dialog';
 import { UserContext } from '@/components/Layout'
 import { supaClient } from '@/supa-client';
 import { useContext } from 'react'
-import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
+
+export async function welcomeLoader() {
+  const { data: { user } } = await supaClient.auth.getUser();
+  if (!user) {
+    return redirect("/");
+  }
+  const { data } = await supaClient
+    .from("user_profiles")
+    .select("*")
+    .eq("user_id", user.id)
+    .single();
+
+  if (data?.username) {
+    return redirect("/");
+  }
+}
 
 const schema = yup.object({
   username: yup.string().required()
