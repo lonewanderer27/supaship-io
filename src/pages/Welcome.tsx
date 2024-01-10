@@ -19,7 +19,7 @@ const schema = yup.object({
 export default function Welcome() {
   const user = useContext(UserContext);
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors, isDirty }, setError } = useForm({
+  const { register, handleSubmit, formState: { errors, isDirty }, setError, clearErrors } = useForm({
     defaultValues: {
       username: ''
     },
@@ -27,6 +27,9 @@ export default function Welcome() {
   });
 
   const onSubmit: SubmitHandler<{ username: string }> = async (data) => {
+    // clear username error
+    clearErrors("username");
+
     const updatedUserProfile = await supaClient.from('user_profiles').insert([
       {
         user_id: user.session?.user.id || "",
@@ -37,7 +40,7 @@ export default function Welcome() {
     if (updatedUserProfile.error) {
       console.error(updatedUserProfile.error);
       setError('username', {
-        type: 'manual',
+        type: 'custom',
         message: 'Username already taken'
       })
       return;
@@ -49,7 +52,6 @@ export default function Welcome() {
   }
   const onError: SubmitErrorHandler<{ username: string }> = (errors) => {
     console.error(errors);
-    
   }
 
   return (
@@ -76,7 +78,7 @@ export default function Welcome() {
             <p className='text-center'>
               This is the name people will see as on Message Board
             </p>
-            <button type='submit'></button>
+            <button type='submit'>Submit</button>
           </form>
         </>
       }
